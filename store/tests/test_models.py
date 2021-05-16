@@ -7,7 +7,10 @@ from django.urls import reverse
 
 from store.models import Category, Product
 
+
 class TestCategoriesModel(TestCase):
+
+
     
     def setUp(self):
         self.data1 = Category.objects.create(name='django', slug='django')
@@ -28,6 +31,7 @@ class TestCategoriesModel(TestCase):
         response = self.client.post(
             reverse('store:category_list', args=[data.slug]))
         self.assertEqual(response.status_code, 200)
+
 
 class TestProductsModel(TestCase):
     def setUp(self):
