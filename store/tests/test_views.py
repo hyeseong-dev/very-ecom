@@ -41,5 +41,21 @@ class TestViewResponses(TestCase):
         '''
         Test homepage response status
         '''
+        request = HttpRequest()
         response = self.c.get('/')
+        html = response.content.decode('utf8')
+        self.assertIn('<title>Home</title>', html)
+        self.assertTrue(html.startswith('\n<!DOCTYPE html>\n'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_product_detail_url(self):
+        response = self.c.get(reverse('store:product_detail', args=['django-beginner']))
+        self.assertEqual(response.status_code, 404)
+
+    def test_view_function(self):
+        request = self.factory.get('/item/django-beginners')
+        response = all_products(request)
+        html = response.content.decode('utf8')
+        self.assertIn('<title>Home</title>', html)
+        self.assertTrue(html.startswith('\n<!DOCTYPE html>\n'))
         self.assertEqual(response.status_code, 200)
